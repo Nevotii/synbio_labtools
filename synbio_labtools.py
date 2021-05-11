@@ -13,12 +13,12 @@ def get_table_download_link(df):
     """
     csv = df.to_csv(index=True)
     b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-    href = f'<a href="data:file/csv;base64,{b64}" download="gibson.csv">Download csv file</a>'
+    href = f'<a href="data:file/csv;base64,{b64}" download="gibson.csv">Download table (.csv)</a>'
     return href
 
 st.title('Gibson Calculator')
 
-insert_number = st.number_input("Number of inserts", key='start', value=1)
+insert_number = st.number_input("Number of inserts", key='start', value=1, min_value=1, step=1)
 vector_mass = st.number_input("Desired vector mass to use", key='vector_mass', value = 30.00)
 
 length = dict()
@@ -60,6 +60,14 @@ data = data.iloc[:,[3,4,0,1,2]]
 st.table(data)
 
 st.markdown(get_table_download_link(data), unsafe_allow_html=True)
+
+
+st.subheader('References')
+st.write('Mass of inserts is calculated using the following formula:')
+st.latex(r'mass\ of\ insert\ =\ insert:vector \ molar \ ratio * mass\ of\ vector * \frac{insert \ length}{vector \ length}')
+
+st.markdown("***")
+st.info("This page was created by [Guillermo Nevot](https://gnevot.xyz). If you like the app, please [reach out!](https://twitter.com/nevotii?lang=en)")
 
 
 
