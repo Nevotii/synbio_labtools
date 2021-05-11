@@ -1,0 +1,4 @@
+pandas
+numpy
+base64
+streamlit
