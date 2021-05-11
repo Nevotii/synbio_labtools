@@ -1,4 +1,5 @@
 mkdir -p ~/.streamlit/
+rm ~/.streamlit/config.toml
 echo "\
 [general]\n\
 email = \"guillermo.nevot@upf.edu\"\n\
