@@ -18,8 +18,8 @@ def get_table_download_link(df):
 
 st.title('Gibson Calculator')
 
-insert_number = st.number_input("Number of inserts", key='start', value=1, min_value=1, step=1)
-vector_mass = st.number_input("Desired vector mass to use", key='vector_mass', value = 30.00)
+insert_number = st.number_input("Number of parts", key='start', value=1, min_value=1, step=1)
+vector_mass = st.number_input("Desired vector mass to use (ng)", key='vector_mass',min_value=0.0, value = 30.00)
 
 length = dict()
 concentration = dict()
@@ -29,8 +29,8 @@ name = dict()
 column1, column2, column3 = st.beta_columns(3)
 
 name['vector'] = column1.text_input('Vector', key='vector', value='vector')
-length['vector'] = column2.number_input('Lenght (bp)', key='999', value=1000)
-concentration['vector'] = column3.number_input('Concentration (ng/ul)', key='999', value=30.0)
+length['vector'] = column2.number_input('Lenght (bp)', key='999', value=1000, min_value=0)
+concentration['vector'] = column3.number_input('Concentration (ng/ul)', key='999', value=30.0, min_value=0.0)
 
 ratio['vector'] = 1
 
@@ -38,9 +38,9 @@ c1, c2, c3, c4 = st.beta_columns(4)
 
 for i in range(1, insert_number):
     name['insert'+str(i)] = c1.text_input(f'Insert {str(i)}', key=str(i), value='insert '+str(i))
-    length['insert'+str(i)] = c2.number_input('Lenght (bp)', key=str(i), value=100)
-    concentration['insert'+str(i)] = c3.number_input('Concentration (ng/ul)', key='lol'+str(i), value=1.0)
-    ratio['insert'+str(i)] = c4.number_input('Insert:vector ratio', key='lol'+str(i), value=3)
+    length['insert'+str(i)] = c2.number_input('Lenght (bp)', key=str(i), value=100, min_value=0)
+    concentration['insert'+str(i)] = c3.number_input('Concentration (ng/ul)', key='lol'+str(i), value=1.0, min_value=0.0)
+    ratio['insert'+str(i)] = c4.number_input('Insert:vector ratio', key='lol'+str(i), value=3.0, min_value=0.0)
 
 
 
@@ -49,6 +49,7 @@ data.columns = ['name','length' , 'conc', 'ratio']
 
 data['mass'] = vector_mass * data['ratio'] * (data['length']/max(data['length']))
 data['vol'] = data['mass']/data['conc']
+data['vol'] = data['vol'].astype('float').round(2)
 
 data.set_index('name', drop=True, inplace=True)
 
@@ -58,7 +59,6 @@ data.columns = ['Length (bp)', "Concentration (ng/ul)",
 data = data.iloc[:,[3,4,0,1,2]]
 
 st.table(data)
-
 st.markdown(get_table_download_link(data), unsafe_allow_html=True)
 
 
