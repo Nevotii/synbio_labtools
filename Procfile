@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run --server.port $PORT synbio_labtools.py
+web: sh setup.sh && streamlit run --server.port $PORT __init__.py
