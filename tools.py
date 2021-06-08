@@ -65,13 +65,18 @@ def gibson():
     data['mass'] = vector_mass * data['ratio'] * (data['length']/max(data['length']))
     data['vol'] = data['mass']/data['conc']
     data['vol'] = data['vol'].astype('float').round(2)
+    total_volume = data['vol'].sum()
+    
 
     data.set_index('name', drop=True, inplace=True)
-
+    data.loc['Total'] = pd.Series(data['vol'].sum(), index = ['vol'])
+    data = data.fillna('-')
+    
     data.columns = ['Length (bp)', "Concentration (ng/ul)",
                       "insert:vector ratio", "mass (ng)", "volume (ul)"]
 
     data = data.iloc[:,[3,4,0,1,2]]
+    
 
     st.table(data)
     st.markdown(get_table_download_link(data), unsafe_allow_html=True)
