@@ -52,8 +52,8 @@ def gibson():
     c1, c2, c3, c4 = st.columns(4)
 
     for i in range(1, int(insert_number)):
-        name['insert'+str(i)] = c1.text_input(f'Insert {str(i)}', key=str(i), value='insert '+str(i))
-        length['insert'+str(i)] = c2.number_input('Lenght (bp)', key=str(i), value=100, min_value=0)
+        name['insert'+str(i)] = c1.text_input(f'Insert {str(i)}', value='insert '+str(i))
+        length['insert'+str(i)] = c2.number_input('Lenght (bp)', value=100, min_value=0)
         concentration['insert'+str(i)] = c3.number_input('Concentration (ng/ul)', key='lol'+str(i)+2, value=1.0, min_value=0.0)
         ratio['insert'+str(i)] = c4.number_input('Insert:vector ratio', key='lol'+str(i)+1, value=3.0, min_value=0.0)
 
