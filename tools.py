@@ -44,7 +44,7 @@ def gibson():
     column1, column2, column3 = st.columns(3)
 
     name['vector'] = column1.text_input('Vector', key='vector', value='vector')
-    length['vector'] = column2.number_input('Lenght (bp)', key='999', value=1000, min_value=0)
+    length['vector'] = column2.number_input('Lenght (bp)', key='998', value=1000, min_value=0)
     concentration['vector'] = column3.number_input('Concentration (ng/ul)', key='999', value=30.0, min_value=0.0)
 
     ratio['vector'] = 1
