@@ -70,7 +70,7 @@ def gibson():
 
     data.set_index('name', drop=True, inplace=True)
     data.loc['Total'] = pd.Series(data['vol'].sum(), index = ['vol'])
-    data = data.fillna('-')
+    data = data.fillna(0)
     
     data.columns = ['Length (bp)', "Concentration (ng/ul)",
                       "insert:vector ratio", "mass (ng)", "volume (ul)"]
