@@ -33,7 +33,7 @@ def gibson():
 
     st.title('Gibson Calculator')
 
-    insert_number = st.number_input("Number of parts", key='start', value=1, min_value=1, step=1)
+    insert_number = st.number_input("Number of parts", key='start', value=int(1), min_value=1, step=1)
     vector_mass = st.number_input("Desired vector mass to use (ng)", key='vector_mass',min_value=0.0, value = 30.00)
 
     length = dict()
