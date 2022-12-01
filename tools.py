@@ -132,39 +132,31 @@ def baseedit():
     """
     
     import base_edit
+    import io
     
-    uploaded_file = st.file_uploader("Choose a file")
+    uploaded_file = st.file_uploader("Choose a file", key="genome")
     
     if uploaded_file is not None:
-        with open(uploaded_file, 'r') as genome:
-            seq = SeqIO.read(genome, 'fasta').seq
+        genome = io.StringIO(uploaded_file.getvalue().decode("utf-8"))
+        seq = SeqIO.read(genome, 'fasta').seq
     else:
         with open('cutibacterium_acnes.fasta', 'r') as genome:
             seq = SeqIO.read(genome, 'fasta').seq
 
-    pam="GG"
-
-    win_of_edi=6
-    dis_from_pam=18
-    end_of_win=dis_from_pam-win_of_edi
-    smallpam=3-len(pam)
-    codons_fw=["CAA","CAG","CGA"]
-    codons_rv=["TGG"]
-    genome=SeqIO.read("KT2440genome.fasta.txt", "fasta").seq #genome sequence to search against
-    cutoff=1 # proportion of coding sequence which is searched 1=100%; 0.5 only first half of gene
-    pam_rv_c=Seq(pam).reverse_complement()
-
-    count_targetedgenes=0
-    count_totalgenes=0
-    placestopcodon=[]
+    uploaded_fasta = st.file_uploader("Choose a file ORF", key="ORF")    
     
-    sequence = st.text_area('ORFs to be edited (Fasta format)')
-    
-    if sequence is not None:     
-        for seq_record in SeqIO.parse(sequence, "fasta"):
-            count_targetedgenes+=base_edit.Spacer_search()
-
+    if uploaded_fasta is not None:
+        fasta = io.StringIO(uploaded_fasta.getvalue().decode("utf-8"))
+        count_targetedgenes = 0
+        placestopcodon=[]
+        print("I start iterating...")
+        for seq_record in SeqIO.parse(fasta, 'fasta'):
+            print(seq_record.seq)
+            placestopcodon = base_edit.Spacer_search(seq_record,placestopcodon)[1]
+            print(placestopcodon)
+            
         for item in placestopcodon:
             st.write("%s\n" % item)
     else:
         st.write("funcion acabada")
+    

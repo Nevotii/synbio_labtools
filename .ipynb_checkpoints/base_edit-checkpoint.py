@@ -10,22 +10,6 @@ from Bio import GenBank
 from Bio import SeqIO
 from Bio.Seq import Seq
 
-pam="GG"
-
-win_of_edi=6
-dis_from_pam=18
-end_of_win=dis_from_pam-win_of_edi
-smallpam=3-len(pam)
-codons_fw=["CAA","CAG","CGA"]
-codons_rv=["TGG"]
-genome=SeqIO.read("KT2440genome.fasta.txt", "fasta").seq #genome sequence to search against
-cutoff=1 # proportion of coding sequence which is searched 1=100%; 0.5 only first half of gene
-pam_rv_c=Seq(pam).reverse_complement()
-
-count_targetedgenes=0
-count_totalgenes=0
-placestopcodon=[]
-
 def Find_codon_position(full, codon):
     sub_index = 0
     position = -1
@@ -44,8 +28,24 @@ def Find_codon_position(full, codon):
 
     return position
 
-def Spacer_search():
-     for n in range(int(len(seq_record.seq)*cutoff)):
+def Spacer_search(seq_record, placestopcodon):
+    
+    pam="GG"
+
+    win_of_edi=6
+    dis_from_pam=18
+    end_of_win=dis_from_pam-win_of_edi
+    smallpam=3-len(pam)
+    codons_fw=["CAA","CAG","CGA"]
+    codons_rv=["TGG"]
+    genome=SeqIO.read("KT2440genome.fasta.txt", "fasta").seq #genome sequence to search against
+    cutoff=1 # proportion of coding sequence which is searched 1=100%; 0.5 only first half of gene
+    pam_rv_c=Seq(pam).reverse_complement()
+
+    count_targetedgenes=0
+    count_totalgenes=0
+    
+    for n in range(int(len(seq_record.seq)*cutoff)):
         
         #forward strand
         if pam in seq_record[n+smallpam:3+n]: # search forward strand
@@ -59,10 +59,11 @@ def Spacer_search():
                               #  print(seq_record.seq[n-13:n])
                                 if counts<2:
                               #      print ((codon_position+n-dis_from_pam)/len(seq_record.seq))
+                                    print("I append")
                                     placestopcodon.append(round(codon_position+n-dis_from_pam,2))
                     #                print (seq_record.seq[n-20:n])
                     #                print (seq_record.description)
-                                    return(1)
+                                    return(1, placestopcodon)
                               
         
         if pam_rv_c in seq_record[n-3:n-smallpam]:
@@ -76,20 +77,9 @@ def Spacer_search():
                             placestopcodon.append(round((codon_position+n-dis_from_pam),2))
                          #   print (seq_record.seq[n:n+20].reverse_complement())
                   #          print (seq_record.description)
-                            return(1)
-     return(0)
+                            return(1, placestopcodon)
+    return(0, placestopcodon)
 
-for seq_record in SeqIO.parse("KT2440codingsequence.fasta", "fasta"):
-    count_targetedgenes+=Spacer_search()
-    count_totalgenes+=1
-print(count_targetedgenes, count_totalgenes)
-#print(placestopcodon)
-with open ("results_PPngg.txt", "w+") as file:
-     for item in placestopcodon:
-        file.write("%s;" % item)
-with open ("results_percentsuccessPPNGG.txt", "w+") as file:
-    file.write(str(count_targetedgenes/count_totalgenes))
-    
     
    
                         
