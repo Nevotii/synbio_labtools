@@ -133,7 +133,7 @@ def baseedit():
     
     import base_edit
     
-    genome = st.file_uploader("Choose a file")
+    uploaded_file = st.file_uploader("Choose a file")
     
     if uploaded_file is not None:
         with open(uploaded_file, 'r') as genome:
