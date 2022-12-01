@@ -4,4 +4,3 @@ streamlit
 biopython
 fuzzysearch
 Bio
-StringIO
