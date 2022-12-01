@@ -3,7 +3,7 @@
 from collections import OrderedDict
 import streamlit as st
 from streamlit.logger import get_logger
-import tools.py
+import tools
 
 
 LOGGER = get_logger(__name__)
