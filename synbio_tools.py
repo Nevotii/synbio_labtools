@@ -11,24 +11,20 @@ LOGGER = get_logger(__name__)
 # demo_name -> (demo_function, demo_description)
 
 TOOLS = OrderedDict(
-    [
-        ("—", (tools.intro, None)),
-        (
-            "Gibson calculator",
-            (
-                tools.gibson,
-                """
-A small gibson calculator for quickly organising your reaction
-""",
+    [("—", (tools.intro, None)),
+        ("Gibson calculator",
+            (tools.gibson,
+                """A small gibson calculator for quickly organising your reaction""",
             ),
         ),
-        (
-            "C. acnes genome pattern matching",
-            (
-                tools.pattern,
-                """
-To quickly find arbitrary sequences in C. acnes genome.
-""",
+        ("C. acnes genome pattern matching",
+            (tools.pattern,
+                """To quickly find arbitrary sequences in C. acnes genome.""",
+            ),
+        )     ,
+        ("Base editor finder",
+            (tools.baseedit,
+                """To quickly find arbitrary sequences in C. acnes genome.""",
             ),
         )
     ]
