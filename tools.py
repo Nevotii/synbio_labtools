@@ -160,7 +160,7 @@ def baseedit():
     
     sequence = st.text_area('ORFs to be edited (Fasta format)')
     
-    if sequence not None:     
+    if sequence is not None:     
         for seq_record in SeqIO.parse(sequence, "fasta"):
             count_targetedgenes+=base_edit.Spacer_search()
 
