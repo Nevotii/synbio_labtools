@@ -133,7 +133,7 @@ def baseedit():
     
     import base_edit
     
-    uploaded_file = st.file_uploader("Choose a file")
+    genome = st.file_uploader("Choose a file")
     
     if uploaded_file is not None:
         with open(uploaded_file, 'r') as genome:
@@ -160,8 +160,9 @@ def baseedit():
     
     sequence = st.text_area('ORFs to be edited (Fasta format)')
     
-    for seq_record in SeqIO.parse(sequence, "fasta"):
-        count_targetedgenes+=base_edit.Spacer_search()
-        
-    for item in placestopcodon:
-        st.write("%s\n" % item)
+    if sequence not None:     
+        for seq_record in SeqIO.parse(sequence, "fasta"):
+            count_targetedgenes+=base_edit.Spacer_search()
+
+        for item in placestopcodon:
+            st.write("%s\n" % item)
