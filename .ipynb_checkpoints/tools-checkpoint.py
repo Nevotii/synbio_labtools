@@ -166,3 +166,5 @@ def baseedit():
 
         for item in placestopcodon:
             st.write("%s\n" % item)
+    else:
+        st.write("funcion acabada")
