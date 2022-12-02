@@ -42,7 +42,7 @@ def gibson():
     ratio = dict()
     name = dict()
 
-    column1, column2, column3 = st.beta_columns(3)
+    column1, column2, column3 = st.columns(3)
 
     name['vector'] = column1.text_input('Vector', key='vector', value='vector')
     length['vector'] = column2.number_input('Lenght (bp)', key='999', value=1000, min_value=0)
@@ -50,7 +50,7 @@ def gibson():
 
     ratio['vector'] = 1
 
-    c1, c2, c3, c4 = st.beta_columns(4)
+    c1, c2, c3, c4 = st.columns(4)
 
     for i in range(1, insert_number):
         name['insert'+str(i)] = c1.text_input(f'Insert {str(i)}', key=str(i), value='insert '+str(i))
@@ -106,7 +106,7 @@ def pattern():
         
         if fw or rv:
             st.write(f'## You have {len(fw)+len(rv)} matches for your sequence in KPA')
-            c1, c2, c3, c4 = st.beta_columns(4)
+            c1, c2, c3, c4 = st.columns(4)
             c1.write('### Position')
             c2.write('### Mismatch')
             c3.write('### Sequence')
